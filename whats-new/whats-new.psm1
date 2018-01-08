@@ -1,10 +1,10 @@
-function Delete-LocalBranches ($Commit = 'HEAD', [switch]$Force) {
+function Remove-LocalBranches ($Commit = 'HEAD', [switch]$Force) {
   git branch |
     ? { $_ -notmatch '(^\*)|(^. master$)' } |
     % { git branch $(if($Force) { '-D' } else { "-d" }) $_.Substring(2) }
 }
 
-function Bump-MajorVersionTag() {
+function Add-MajorVersionTag() {
   Param(
     [switch]$AllBranches,
     [string]$Message = ''
@@ -17,7 +17,7 @@ function Bump-MajorVersionTag() {
   write-host "Version Bumped`: $($elements[3]) --> $newTag $message" -foregroundcolor cyan
 }
 
-function Bump-MinorVersionTag() {
+function Add-MinorVersionTag() {
   Param(
     [switch]$AllBranches,
     [string]$Message = ''
@@ -30,7 +30,7 @@ function Bump-MinorVersionTag() {
   write-host "Version Bumped`: $($elements[3]) --> $newTag $message" -foregroundcolor cyan
 }
 
-function Bump-PatchVersionTag() {
+function Add-PatchVersionTag() {
   Param(
     [switch]$AllBranches,
     [string]$Message = ''
