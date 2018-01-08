@@ -1,69 +1,73 @@
-function Remove-LocalBranches ($Commit = 'HEAD', [switch]$Force) {
+function Remove-LocalBranches ([switch]$Force) {
   git branch |
-    ? { $_ -notmatch '(^\*)|(^. master$)' } |
-    % { git branch $(if($Force) { '-D' } else { "-d" }) $_.Substring(2) }
+    Where-Object { $_ -notmatch '(^\*)|(^. master$)' } |
+    ForEach-Object { git branch $(if($Force) { '-D' } else { '-d' }) $_.Substring(2) }
 }
 
-function Add-MajorVersionTag() {
-  Param(
-    [switch]$AllBranches,
+function Add-MajorVersionTag {
+  Param (
     [string]$Message = ''
   )
-  $elements = GetLatestVersionElements $AllBranches
+  $elements = GetLatestVersionElements
   $major = [int]::Parse($($elements[0]))
   $major++
-  $newTag = "v$major.0.0"
-  CreateNewTag $newTag $Message
-  write-host "Version Bumped`: $($elements[3]) --> $newTag $message" -foregroundcolor cyan
+  $NewTag = "v$major.0.0"
+  CreateNewTag $NewTag $Message
+  WriteSuccessMessage $($elements[3]) $NewTag $Message
 }
 
-function Add-MinorVersionTag() {
-  Param(
-    [switch]$AllBranches,
+function Add-MinorVersionTag {
+  Param (
     [string]$Message = ''
   )
-  $elements = GetLatestVersionElements $AllBranches
+  $elements = GetLatestVersionElements
   $minor = [int]::Parse($($elements[1]))
   $minor++
-  $newTag = "v$($elements[0]).$minor.0"
-  CreateNewTag $newTag $Message
-  write-host "Version Bumped`: $($elements[3]) --> $newTag $message" -foregroundcolor cyan
+  $NewTag = "v$($elements[0]).$minor.0"
+  CreateNewTag $NewTag $Message
+  WriteSuccessMessage $($elements[3]) $NewTag $Message
 }
 
-function Add-PatchVersionTag() {
-  Param(
-    [switch]$AllBranches,
+function Add-PatchVersionTag {
+  Param (
     [string]$Message = ''
   )
-  $elements = GetLatestVersionElements $AllBranches
+  $elements = GetLatestVersionElements
   $patch = [int]::Parse($($elements[2]))
   $patch++
-  $newTag = "v$($elements[0]).$($elements[1]).$patch"
-  CreateNewTag $newTag $Message
-  write-host "Version Bumped`: $($elements[3]) --> $newTag $message" -foregroundcolor cyan
+  $NewTag = "v$($elements[0]).$($elements[1]).$patch"
+  CreateNewTag $NewTag $Message
+  WriteSuccessMessage $($elements[3]) $NewTag $Message
 }
 
-function CreateNewTag($newTag, $message) {
-  if ($message -eq '') { git tag -a $newTag }
-  else { git tag -a $newTag -m $message }
-}
+function New-VersionTag {
+  Param (
+    [string]$Tag,
+    [string]$Message = ''
+  )
 
-function GetLatestVersionElements([switch]$AllBranches) {
-  if ($AllBranches) {
-    $lastTag = git for-each-ref refs/tags/v* --format="%(refname:short)" --sort=-v:refname --count=1
-    $lastTag.Substring(1).split('.') # return array of version numbers
-    $lastTag # return the unsplit original
-  } else {
-    $lastTag = git describe
-    $index = $lastTag.indexOf('-')
-    if ($index -lt 0) {
-      $lastTag.Substring(1).split('.') # return array of version numbers
-      $lastTag.Substring(1) # return the unsplit original
-    } else {
-      $lastTag.Substring(1, $index - 1).split('.') # return array of version numbers
-      $lastTag.Substring(1, $index - 1) # return the unsplit original
-    }
+  if ($Tag -notmatch "v[0-9]+\.[0-9]+\.[0-9]+") {
+    throw "$Tag is not a valid version number. Use the format 'v1.2.3'."
   }
+
+  CreateNewTag $Tag $Message
+  Write-Host "New tag created`: $Tag $Message" -ForegroundColor Cyan
 }
 
-export-modulemember *-*
+function WriteSuccessMessage($OldTag, $NewTag, $Message) {
+  Write-Host "Version Incremented`: $OldTag --> $NewTag $Message" -ForegroundColor Cyan
+}
+
+function CreateNewTag($NewTag, $Message) {
+  if ($Message -eq '') { git tag -a $NewTag }
+  else { git tag -a $NewTag -m $Message }
+}
+
+function GetLatestVersionElements {
+  $lastTag = git for-each-ref refs/tags/v* --format="%(refname:short)" --sort=-v:refname --count=1
+  if ($lastTag -eq $null) { throw "Couldn't find any previous version to increment!" }
+  $lastTag.Substring(1).split('.') # return array of version numbers
+  $lastTag # return the unsplit original
+}
+
+Export-ModuleMember *-*
