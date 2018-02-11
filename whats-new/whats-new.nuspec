@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>whats-new</id>
+    <version>$version$</version>
+    <authors>Nick Spreitzer</authors>
+    <owners>Nick Spreitzer</owners>
+    <licenseUrl>https://github.com/refactorsaurusrex/whats-new/blob/master/LICENSE</licenseUrl>
+    <projectUrl>https://github.com/refactorsaurusrex/whats-new</projectUrl>
+    <iconUrl>https://raw.githubusercontent.com/refactorsaurusrex/whats-new/master/whats-new.png</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Powershell functions for versioning a git repo with tags and more!</description>
+    <copyright>Copyright 2018</copyright>
+    <tags>git semver</tags>
+  </metadata>
+</package>
