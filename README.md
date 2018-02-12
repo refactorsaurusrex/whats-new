@@ -1,3 +1,5 @@
+[![Build status](https://ci.appveyor.com/api/projects/status/rsvlu24m8jdxdbql?svg=true)](https://ci.appveyor.com/project/refactorsaurusrex/whats-new)
+
 # What's New?!
 
 ![whats-new](/whats-new.png) 
