@@ -29,8 +29,10 @@ By default, this will only remove merged branches. Use `-Force` to delete both [
 
 # Installation
 
-1. [Install Chocolatey.](https://chocolatey.org/install#installing-chocolatey)
-1. Run this: `choco install whats-new`
+1. [Install Chocolatey](https://chocolatey.org/install#installing-chocolatey).
+1. Run: `choco install whats-new`
+
+Chocolatey package page is [here](https://chocolatey.org/packages/whats-new).
 
 # Contributions & Bug Reports
 
