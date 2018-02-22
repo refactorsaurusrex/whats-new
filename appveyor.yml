@@ -10,7 +10,7 @@ build_script:
 test: off
 artifacts:
 - path: '\whats-new*.nupkg'
-  name: Chocolatey
+  name: whats-new
 deploy:
 - provider: Environment
   name: myget:chocolatey
