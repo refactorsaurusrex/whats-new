@@ -29,16 +29,16 @@ By default, this will only remove merged branches. Use `-Force` to delete both [
 
 # Installation
 
-1. [Install Chocolatey](https://chocolatey.org/install#installing-chocolatey).
-1. Run: `choco install whats-new`
+- [Install Chocolatey](https://chocolatey.org/install#installing-chocolatey)
+- Run: `choco install whats-new`
 
-## Pre-Release Versions
+**NOTE:** The Chocolatey moderation queue is *slooooooooooooooooooooow* and may not have the most recent version published yet. To get the latest version _pending_ publication, run this instead:
 
-The Chocolatey moderation queue is *slooooooooooooooooooooow*. If you want to install the latest pre-release version, run this:
+```
+choco install whats-new -s https://ci.appveyor.com/nuget/whats-new-teneg79dr9y7
+```
 
-`choco install whats-new -s https://ci.appveyor.com/nuget/whats-new-teneg79dr9y7`
-
-Chocolatey package page is [here](https://chocolatey.org/packages/whats-new).
+The `whats-new` chocolatey package page is [here](https://chocolatey.org/packages/whats-new).
 
 # Contributions & Bug Reports
 
