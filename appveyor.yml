@@ -11,8 +11,4 @@ test: off
 artifacts:
 - path: '\whats-new*.nupkg'
   name: whats-new
-deploy:
-- provider: Environment
-  name: myget:chocolatey
-  on:
-    branch: master
+deploy: off
