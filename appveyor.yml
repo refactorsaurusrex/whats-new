@@ -11,10 +11,8 @@ test: off
 artifacts:
 - path: '\whats-new*.nupkg'
   name: Chocolatey
-deploy: 
-- provider: NuGet
-  server: https://chocolatey.org/
-  api_key:
-    secure: nB1mf4p3RJjf/Qsqjx0s/D7WWM7nnKUu/wN2x3+XUxe+mNyg0U8pS9jHw49oiJkA
+deploy:
+- provider: Environment
+  name: myget:chocolatey
   on:
     branch: master
