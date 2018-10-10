@@ -1,8 +1,9 @@
 function Add-MajorVersionTag {
   Param (
-    [Parameter(Mandatory = $true, Position = 0)][string]$Message
+    [Parameter(Mandatory = $true, Position = 0)][string]$Message,
+    [switch]$CurrentBranchOnly
   )
-  $elements = GetLatestVersionElements
+  $elements = GetLatestVersionElements -CurrentBranchOnly:$CurrentBranchOnly
   $major = [int]::Parse($($elements[0]))
   $major++
   $NewTag = "v$major.0.0"
@@ -12,9 +13,10 @@ function Add-MajorVersionTag {
 
 function Add-MinorVersionTag {
   Param (
-    [Parameter(Mandatory = $true, Position = 0)][string]$Message
+    [Parameter(Mandatory = $true, Position = 0)][string]$Message,
+    [switch]$CurrentBranchOnly
   )
-  $elements = GetLatestVersionElements
+  $elements = GetLatestVersionElements -CurrentBranchOnly:$CurrentBranchOnly
   $minor = [int]::Parse($($elements[1]))
   $minor++
   $NewTag = "v$($elements[0]).$minor.0"
@@ -24,9 +26,10 @@ function Add-MinorVersionTag {
 
 function Add-PatchVersionTag {
   Param (
-    [Parameter(Mandatory = $true, Position = 0)][string]$Message
+    [Parameter(Mandatory = $true, Position = 0)][string]$Message,
+    [switch]$CurrentBranchOnly
   )
-  $elements = GetLatestVersionElements
+  $elements = GetLatestVersionElements -CurrentBranchOnly:$CurrentBranchOnly
   $patch = [int]::Parse($($elements[2]))
   $patch++
   $NewTag = "v$($elements[0]).$($elements[1]).$patch"
@@ -58,10 +61,26 @@ function WriteSuccessMessage {
 }
 
 function GetLatestVersionElements {
-  $lastTag = git for-each-ref refs/tags/v* --format="%(refname:short)" --sort=-v:refname --count=1
-  if ($null -eq $lastTag) { throw "Couldn't find any previous version to increment!" }
-  $lastTag.Substring(1).split('.') # return array of version numbers
-  $lastTag # return the unsplit original
+  param (
+    [switch]$CurrentBranchOnly
+  )
+
+  if ($CurrentBranchOnly) {
+    $lastTag = git describe
+    $index = $lastTag.indexOf('-')
+    if ($index -lt 0) {
+      $lastTag.Substring(1).split('.') # return array of version numbers
+      $lastTag.Substring(1) # return the unsplit original
+    } else {
+      $lastTag.Substring(1, $index - 1).split('.') # return array of version numbers
+      $lastTag.Substring(1, $index - 1) # return the unsplit original
+    }
+  } else {
+    $lastTag = git for-each-ref refs/tags/v* --format="%(refname:short)" --sort=-v:refname --count=1
+    if ($null -eq $lastTag) { throw "Couldn't find any previous version to increment!" }
+    $lastTag.Substring(1).split('.') # return array of version numbers
+    $lastTag # return the unsplit original
+  }
 }
 
 Export-ModuleMember *-*
