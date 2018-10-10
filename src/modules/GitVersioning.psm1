@@ -1,9 +1,3 @@
-function Remove-LocalBranches ([switch]$Force) {
-  git branch |
-    Where-Object { $_ -notmatch '(^\*)|(^. master$)' } |
-    ForEach-Object { git branch $(if($Force) { '-D' } else { '-d' }) $_.Substring(2) }
-}
-
 function Add-MajorVersionTag {
   Param (
     [string]$Message = ''
@@ -65,7 +59,7 @@ function CreateNewTag($NewTag, $Message) {
 
 function GetLatestVersionElements {
   $lastTag = git for-each-ref refs/tags/v* --format="%(refname:short)" --sort=-v:refname --count=1
-  if ($lastTag -eq $null) { throw "Couldn't find any previous version to increment!" }
+  if ($null -eq $lastTag) { throw "Couldn't find any previous version to increment!" }
   $lastTag.Substring(1).split('.') # return array of version numbers
   $lastTag # return the unsplit original
 }
