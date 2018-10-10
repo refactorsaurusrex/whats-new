@@ -28,18 +28,7 @@ $manifestArgs = @{
 }
 
 New-ModuleManifest @manifestArgs
-$originalManifestContent = Get-Content $manifestPath
-$cleanManifest = @()
+Import-Module "$PSScriptRoot\src\modules\RemoveModuleManifestComments.psm1" -Force
+Remove-ModuleManifestComments $manifestPath -NoConfirm
 
-$originalManifestContent | ForEach-Object { 
-  if ($_ -match "(?(?=.*#)(.*(?=#))|(.*))" -and -not [string]::IsNullOrWhiteSpace($Matches[0])) { 
-    $cleanManifest += $Matches[0]
-  } 
-}
-
-for ($i = 1; $i -le $cleanManifest.Length - 2; $i++) {
-  $cleanManifest[$i] = "`t$($cleanManifest[$i])"
-}
-
-Set-Content -Path $manifestPath -Value $cleanManifest
 choco pack .\src\whats-new.nuspec --version $Version
