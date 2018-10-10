@@ -1,60 +1,60 @@
 function Add-MajorVersionTag {
   Param (
-    [string]$Message = ''
+    [Parameter(Mandatory = $true, Position = 0)][string]$Message
   )
   $elements = GetLatestVersionElements
   $major = [int]::Parse($($elements[0]))
   $major++
   $NewTag = "v$major.0.0"
-  CreateNewTag $NewTag $Message
+  git tag -a $NewTag -m $Message 
   WriteSuccessMessage $($elements[3]) $NewTag $Message
 }
 
 function Add-MinorVersionTag {
   Param (
-    [string]$Message = ''
+    [Parameter(Mandatory = $true, Position = 0)][string]$Message
   )
   $elements = GetLatestVersionElements
   $minor = [int]::Parse($($elements[1]))
   $minor++
   $NewTag = "v$($elements[0]).$minor.0"
-  CreateNewTag $NewTag $Message
+  git tag -a $NewTag -m $Message 
   WriteSuccessMessage $($elements[3]) $NewTag $Message
 }
 
 function Add-PatchVersionTag {
   Param (
-    [string]$Message = ''
+    [Parameter(Mandatory = $true, Position = 0)][string]$Message
   )
   $elements = GetLatestVersionElements
   $patch = [int]::Parse($($elements[2]))
   $patch++
   $NewTag = "v$($elements[0]).$($elements[1]).$patch"
-  CreateNewTag $NewTag $Message
+  git tag -a $NewTag -m $Message 
   WriteSuccessMessage $($elements[3]) $NewTag $Message
 }
 
 function New-VersionTag {
   Param (
-    [string]$Tag,
-    [string]$Message = ''
+    [Parameter(Mandatory = $true, Position = 0)][string]$Tag,
+    [Parameter(Mandatory = $true, Position = 1)][string]$Message
   )
 
   if ($Tag -notmatch "v[0-9]+\.[0-9]+\.[0-9]+") {
     throw "$Tag is not a valid version number. Use the format 'v1.2.3'."
   }
 
-  CreateNewTag $Tag $Message
+  git tag -a $NewTag -m $Message 
   Write-Host "New tag created`: $Tag $Message" -ForegroundColor Cyan
 }
 
-function WriteSuccessMessage($OldTag, $NewTag, $Message) {
+function WriteSuccessMessage {
+  param(
+    [Parameter(Mandatory = $true, Position = 0)][string]$OldTag,
+    [Parameter(Mandatory = $true, Position = 1)][string]$NewTag,
+    [Parameter(Mandatory = $true, Position = 2)][string]$Message
+  )
   Write-Host "Version Incremented`: $OldTag --> $NewTag $Message" -ForegroundColor Cyan
-}
-
-function CreateNewTag($NewTag, $Message) {
-  if ($Message -eq '') { git tag -a $NewTag }
-  else { git tag -a $NewTag -m $Message }
 }
 
 function GetLatestVersionElements {
