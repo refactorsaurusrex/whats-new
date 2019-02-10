@@ -10,7 +10,10 @@
     <iconUrl>https://raw.githubusercontent.com/refactorsaurusrex/whats-new/master/whats-new.png</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>PowerShell functions for versioning a git repo with tags and more!</description>
-    <copyright>Copyright 2018</copyright>
-    <tags>git semver</tags>
+    <copyright>Copyright 2019</copyright>
+    <tags>git semver powershell</tags>
   </metadata>
+  <files>
+    <file src="publish\**\*.*" />
+  </files>
 </package>
