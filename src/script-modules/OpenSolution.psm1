@@ -1,7 +1,9 @@
-function Open-Solution() {
-  param(
+function Open-Solution {
+  [Alias('sln')]
+  param (
     [string]$RootDirectory = ''
   )
+
   $solutions = Get-ChildItem -Recurse -Path "$RootDirectory*.sln"
   if ($solutions.Count -eq 1) {
     & $solutions.FullName
@@ -15,5 +17,4 @@ function Open-Solution() {
   }
 }
 
-Set-Alias sln Open-Solution
 Export-ModuleMember -Function * -Alias *
