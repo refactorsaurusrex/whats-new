@@ -15,6 +15,10 @@ Remove-Item -Path .\publish -Recurse
 
 $sln = Get-ChildItem -Filter '*.sln' -Recurse | Select-Object -First 1 -ExpandProperty FullName
 dotnet publish $sln --output .\publish -c Release
+Get-ChildItem -Filter "WhatsNew.dll-Help.xml" -Recurse -File |
+  Where-Object { $_.FullName -like "bin\Release" } | 
+  Select-Object -First 1 | 
+  Copy-Item -Destination '.\publish' -Force
 
 Import-Module $PSScriptRoot\publish\WhatsNew.dll
 $moduleInfo = Get-Module WhatsNew

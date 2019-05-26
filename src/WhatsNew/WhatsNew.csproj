@@ -5,7 +5,7 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <NoWarn>1701;1702;1591</NoWarn>
+    <NoWarn></NoWarn>
     <DocumentationFile>C:\Repos\whats-new\src\WhatsNew\WhatsNew.xml</DocumentationFile>
   </PropertyGroup>
 
@@ -30,7 +30,7 @@
   </ItemGroup>
 
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-    <Exec Command="dotnet publish --no-build --output $(SolutionDir)..\publish" />
+    <Exec Command="dotnet publish --no-build --output $(SolutionDir)..\publish&#xD;&#xA;xcopy $(OutDir)$(ProjectName).dll-Help.xml $(SolutionDir)..\publish /y" />
   </Target>
 
 </Project>
