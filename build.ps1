@@ -72,8 +72,5 @@ Update-ModuleManifest @updateManifestArgs
 Import-Module "$PSScriptRoot\src\script-modules\RemoveModuleManifestComments.psm1" -Force
 Remove-ModuleManifestComments $manifestPath -NoConfirm
 
-Get-ChildItem -Path "$PSScriptRoot\src" -Filter "chocolatey*.ps1" | Copy-Item -Destination "$PSScriptRoot\publish"
-New-item -ItemType Directory -Path "$PSScriptRoot\publish\script-modules\" | Out-Null
-Get-ChildItem -Path "$PSScriptRoot\src\script-modules" -Filter "*.ps*1" | Copy-Item -Destination "$PSScriptRoot\publish\script-modules\"
-
-choco pack "$PSScriptRoot\whats-new.nuspec" --version $Version
+New-item -ItemType Directory -Path "$publishOutputDir\script-modules\" | Out-Null
+Get-ChildItem -Path "$PSScriptRoot\src\script-modules" -Filter "*.ps*1" | Copy-Item -Destination "$publishOutputDir\script-modules\"
