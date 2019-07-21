@@ -5,10 +5,12 @@ branches:
   only:
   - master
 skip_tags: true
+image: Visual Studio 2017
 build_script:
 - ps: '& ".\build.ps1"'
 test: off
-artifacts:
-- path: '\whats-new*.nupkg'
-  name: whats-new
-deploy: off
+deploy_script:
+- pwsh: Publish-Module -NuGetApiKey $env:psgallery -Path .\publish\WhatsNew
+environment:
+  psgallery:
+    secure: CH/4X9NuaEG0NizuG9RVhZIt25cja8eS7AwO/E8e8Tb0pNMpVnPnMZvPHhl0WmV7
