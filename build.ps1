@@ -13,8 +13,8 @@ if ($env:APPVEYOR_BUILD_VERSION) {
 Get-ChildItem -Filter '*.nupkg' | Remove-Item 
 Remove-Item -Path "$PSScriptRoot\publish" -Recurse -ErrorAction SilentlyContinue
 
-$sln = Get-ChildItem -Filter '*.sln' -Recurse | Select-Object -First 1 -ExpandProperty FullName
-dotnet publish $sln --output .\publish -c Release
+$sln = Get-ChildItem -Filter '*.sln' -Recurse -Path $PSScriptRoot | Select-Object -First 1 -ExpandProperty FullName
+dotnet publish $sln --output "$PSScriptRoot\publish" -c Release
 
 if ($LASTEXITCODE -ne 0) {
   throw "Failed to publish application."
