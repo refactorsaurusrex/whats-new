@@ -45,7 +45,7 @@ $modules = $scriptFiles |
 $modules += ".\WhatsNew.dll"
 $manifestPath = "$publishOutputDir\WhatsNew.psd1"
 
-$manifestArgs = @{
+$newManifestArgs = @{
   Path = $manifestPath
   Description = "Powershell functions for versioning a git repo with tags and more!"
   Guid = '861e5d28-8348-47d3-a2f6-cdd23e33bb55'
@@ -56,16 +56,19 @@ $manifestArgs = @{
   NestedModules = $modules
   CmdletsToExport = $cmdletNames
   FunctionsToExport = $scriptFunctions
+}
+
+$updateManifestArgs = @{
+  Path = $manifestPath
   PrivateData = @{
-    PSData = @{
-      Tags = '',''
-      LicenseUri = ''
-      ProjectUri = ''
-    }
+    Tags = 'git','semver'
+    LicenseUri = 'https://github.com/refactorsaurusrex/whats-new/blob/master/LICENSE.md'
+    ProjectUri = 'https://github.com/refactorsaurusrex/whats-new'
   }
 }
 
-New-ModuleManifest @manifestArgs
+New-ModuleManifest @newManifestArgs
+Update-ModuleManifest @updateManifestArgs
 Import-Module "$PSScriptRoot\src\script-modules\RemoveModuleManifestComments.psm1" -Force
 Remove-ModuleManifestComments $manifestPath -NoConfirm
 
