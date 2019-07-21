@@ -11,16 +11,16 @@ if ($env:APPVEYOR_BUILD_VERSION) {
 }
 
 Get-ChildItem -Filter '*.nupkg' | Remove-Item 
-Remove-Item -Path .\publish -Recurse -ErrorAction SilentlyContinue
+Remove-Item -Path "$PSScriptRoot\publish" -Recurse -ErrorAction SilentlyContinue
 
 $sln = Get-ChildItem -Filter '*.sln' -Recurse | Select-Object -First 1 -ExpandProperty FullName
 dotnet publish $sln --output .\publish -c Release
-Get-ChildItem -Filter "WhatsNew.dll-Help.xml" -Recurse -File |
+Get-ChildItem -Filter "WhatsNew.dll-Help.xml" -Recurse -File -Path "$PSScriptRoot\src" |
   Where-Object { $_.FullName -like "bin\Release" } | 
   Select-Object -First 1 | 
-  Copy-Item -Destination '.\publish' -Force
+  Copy-Item -Destination "$PSScriptRoot\publish" -Force
 
-Import-Module $PSScriptRoot\publish\WhatsNew.dll
+Import-Module "$PSScriptRoot\publish\WhatsNew.dll"
 $moduleInfo = Get-Module WhatsNew
 $cmdletNames = Export-BinaryCmdletNames -ModuleInfo $moduleInfo
 $cmdletAliases = Export-BinaryCmdletAliases -ModuleInfo $moduleInfo
