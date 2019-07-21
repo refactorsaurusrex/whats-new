@@ -11,7 +11,7 @@ if ($env:APPVEYOR_BUILD_VERSION) {
 }
 
 Get-ChildItem -Filter '*.nupkg' | Remove-Item 
-Remove-Item -Path .\publish -Recurse
+Remove-Item -Path .\publish -Recurse -ErrorAction SilentlyContinue
 
 $sln = Get-ChildItem -Filter '*.sln' -Recurse | Select-Object -First 1 -ExpandProperty FullName
 dotnet publish $sln --output .\publish -c Release
