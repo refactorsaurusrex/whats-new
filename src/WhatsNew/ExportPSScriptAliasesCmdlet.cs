@@ -23,7 +23,7 @@ namespace WhatsNew
         /// <inheritdoc />
         protected override void ProcessRecord()
         {
-            var scriptBlockAst = Parser.ParseFile(ScriptFile, out var tokens, out var errors);
+            var scriptBlockAst = Parser.ParseFile(ScriptFile, out _, out _);
             var attributes = scriptBlockAst.FindAll(a => a is AttributeAst, true).Cast<AttributeAst>();
             var aliases = attributes
                 .SelectMany(x => x.PositionalArguments)
