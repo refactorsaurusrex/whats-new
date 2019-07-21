@@ -1,0 +1,5 @@
+Verification
+
+Verification is intended to assist the Chocolatey moderators and  community in verifying that this package's contents are trustworthy.
+
+This package is published by the Nick Spreitzer himself. 

@@ -25,6 +25,10 @@ Get-ChildItem -Filter "WhatsNew.dll-Help.xml" -Recurse -File -Path "$PSScriptRoo
   Select-Object -First 1 | 
   Copy-Item -Destination "$PSScriptRoot\publish" -Force
 
+Copy-Item -Path "$PSScriptRoot\src\Verification.md" -Destination "$PSScriptRoot\publish"
+Copy-Item -Path "$PSScriptRoot\LICENSE.md" -Destination "$PSScriptRoot\publish"
+Remove-Item "$PSScriptRoot\publish\*.pdb"
+
 Import-Module "$PSScriptRoot\publish\WhatsNew.dll"
 $moduleInfo = Get-Module WhatsNew
 $cmdletNames = Export-BinaryCmdletNames -ModuleInfo $moduleInfo
@@ -61,4 +65,4 @@ Get-ChildItem -Path "$PSScriptRoot\src" -Filter "chocolatey*.ps1" | Copy-Item -D
 New-item -ItemType Directory -Path "$PSScriptRoot\publish\script-modules\" | Out-Null
 Get-ChildItem -Path "$PSScriptRoot\src\script-modules" -Filter "*.ps*1" | Copy-Item -Destination "$PSScriptRoot\publish\script-modules\"
 
-choco pack "$PSScriptRoot\whats-new.nuspec" --version $Version
+choco pack "$PSScriptRoot\whats-new.nuspec" --version $Version --outputdirectory $PSScriptRoot
