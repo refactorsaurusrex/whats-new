@@ -34,7 +34,7 @@
   </ItemGroup>
 
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-    <Exec Command="dotnet publish --no-build --output $(SolutionDir)..\publish&#xD;&#xA;xcopy $(OutDir)$(ProjectName).dll-Help.xml $(SolutionDir)..\publish /y" />
+    <Exec Command="if $(ConfigurationName) == Debug (&#xD;&#xA;  dotnet publish --no-build --output $(SolutionDir)..\publish&#xD;&#xA;  xcopy $(OutDir)$(ProjectName).dll-Help.xml $(SolutionDir)..\publish /y&#xD;&#xA;)" />
   </Target>
 
 </Project>
