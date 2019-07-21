@@ -21,7 +21,7 @@ if ($LASTEXITCODE -ne 0) {
 }
 
 Get-ChildItem -Filter "WhatsNew.dll-Help.xml" -Recurse -File -Path "$PSScriptRoot\src" |
-  Where-Object { $_.FullName -like "bin\Release" } | 
+  Where-Object { $_.FullName -like "*bin\Release*" } | 
   Select-Object -First 1 | 
   Copy-Item -Destination "$PSScriptRoot\publish" -Force
 
