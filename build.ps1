@@ -10,11 +10,13 @@ if ($env:APPVEYOR_BUILD_VERSION) {
   throw "Missing version parameter"
 }
 
+$publishOutputDir = "$PSScriptRoot\publish\WhatsNew"
+
 Get-ChildItem -Filter '*.nupkg' | Remove-Item 
-Remove-Item -Path "$PSScriptRoot\publish" -Recurse -ErrorAction SilentlyContinue
+Remove-Item -Path $publishOutputDir -Recurse -ErrorAction SilentlyContinue
 
 $sln = Get-ChildItem -Filter '*.sln' -Recurse -Path $PSScriptRoot | Select-Object -First 1 -ExpandProperty FullName
-dotnet publish $sln --output "$PSScriptRoot\publish" -c Release
+dotnet publish $sln --output $publishOutputDir -c Release
 
 if ($LASTEXITCODE -ne 0) {
   throw "Failed to publish application."
@@ -23,13 +25,11 @@ if ($LASTEXITCODE -ne 0) {
 Get-ChildItem -Filter "WhatsNew.dll-Help.xml" -Recurse -File -Path "$PSScriptRoot\src" |
   Where-Object { $_.FullName -like "*bin\Release*" } | 
   Select-Object -First 1 | 
-  Copy-Item -Destination "$PSScriptRoot\publish" -Force
+  Copy-Item -Destination $publishOutputDir -Force
 
-Copy-Item -Path "$PSScriptRoot\src\Verification.md" -Destination "$PSScriptRoot\publish"
-Copy-Item -Path "$PSScriptRoot\LICENSE.md" -Destination "$PSScriptRoot\publish"
-Remove-Item "$PSScriptRoot\publish\*.pdb"
+Remove-Item "$publishOutputDir\*.pdb"
 
-Import-Module "$PSScriptRoot\publish\WhatsNew.dll"
+Import-Module "$publishOutputDir\WhatsNew.dll"
 $moduleInfo = Get-Module WhatsNew
 $cmdletNames = Export-BinaryCmdletNames -ModuleInfo $moduleInfo
 $cmdletAliases = Export-BinaryCmdletAliases -ModuleInfo $moduleInfo
@@ -40,13 +40,14 @@ $scriptFunctions = $scriptFiles | Select-Object -ExpandProperty FullName | Expor
 
 $modules = $scriptFiles | 
   Select-Object -ExpandProperty Name | 
-  ForEach-Object { "<APP_DATA>\script-modules\$_" }
+  ForEach-Object { ".\script-modules\$_" }
 
-$modules += "<APP_DATA>\WhatsNew.dll"
-$manifestPath = "$PSScriptRoot\publish\whats-new.psd1"
+$modules += ".\WhatsNew.dll"
+$manifestPath = "$publishOutputDir\WhatsNew.psd1"
 
 $manifestArgs = @{
   Path = $manifestPath
+  Description = "Powershell functions for versioning a git repo with tags and more!"
   Guid = '861e5d28-8348-47d3-a2f6-cdd23e33bb55'
   Author = 'Nick Spreitzer'
   CompanyName = 'RAWR! Productions'
@@ -55,14 +56,21 @@ $manifestArgs = @{
   NestedModules = $modules
   CmdletsToExport = $cmdletNames
   FunctionsToExport = $scriptFunctions
+  PrivateData = @{
+    PSData = @{
+      Tags = '',''
+      LicenseUri = ''
+      ProjectUri = ''
+    }
+  }
 }
 
 New-ModuleManifest @manifestArgs
 Import-Module "$PSScriptRoot\src\script-modules\RemoveModuleManifestComments.psm1" -Force
 Remove-ModuleManifestComments $manifestPath -NoConfirm
 
-Get-ChildItem -Path "$PSScriptRoot\src" -Filter "chocolatey*.ps1" | Copy-Item -Destination .\publish
+Get-ChildItem -Path "$PSScriptRoot\src" -Filter "chocolatey*.ps1" | Copy-Item -Destination "$PSScriptRoot\publish"
 New-item -ItemType Directory -Path "$PSScriptRoot\publish\script-modules\" | Out-Null
 Get-ChildItem -Path "$PSScriptRoot\src\script-modules" -Filter "*.ps*1" | Copy-Item -Destination "$PSScriptRoot\publish\script-modules\"
 
-choco pack "$PSScriptRoot\whats-new.nuspec" --version $Version --outputdirectory $PSScriptRoot
+choco pack "$PSScriptRoot\whats-new.nuspec" --version $Version
