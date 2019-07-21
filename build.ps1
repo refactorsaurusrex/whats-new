@@ -15,6 +15,11 @@ Remove-Item -Path "$PSScriptRoot\publish" -Recurse -ErrorAction SilentlyContinue
 
 $sln = Get-ChildItem -Filter '*.sln' -Recurse | Select-Object -First 1 -ExpandProperty FullName
 dotnet publish $sln --output .\publish -c Release
+
+if ($LASTEXITCODE -ne 0) {
+  throw "Failed to publish application."
+}
+
 Get-ChildItem -Filter "WhatsNew.dll-Help.xml" -Recurse -File -Path "$PSScriptRoot\src" |
   Where-Object { $_.FullName -like "bin\Release" } | 
   Select-Object -First 1 | 
