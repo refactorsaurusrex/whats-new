@@ -1,3 +1,16 @@
+<#
+.SYNOPSIS
+  Removes comments from module manifest files.
+.DESCRIPTION
+  When you use the New-ModuleManifest cmdlet to create a module manifest, it generates a lot of comments that you may not want to keep. This
+  function strips away that noise and makes your manifest easy to read.
+.INPUTS
+  You can pipe ine a string containing the file path of a PowerShell module manifest file.
+.PARAMETER ManifestPath
+  The path to the module manifest file.
+.PARAMETER NoConfirm
+  Do not confirm before overwriting the manifest file.
+#>
 function Remove-ModuleManifestComments {
   [CmdletBinding(SupportsShouldProcess = $true, ConfirmImpact = 'High')]
   param (

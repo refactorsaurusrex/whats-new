@@ -1,9 +1,8 @@
 <#
 .SYNOPSIS
-Recursively searches for the first `.sln` file and opens it using the default application, usually Visual Studio. 
-
+  Recursively searches for the first `.sln` file and opens it using the default application, usually Visual Studio. 
 .PARAMETER RootDirectory
-The directory to search. Defaults to the current directory. 
+  The directory to search. Defaults to the current directory. 
 #>
 function Open-Solution {
   [Alias('sln')]

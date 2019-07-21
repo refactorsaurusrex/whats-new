@@ -1,3 +1,14 @@
+<# 
+.SYNOPSIS
+  Adds a new major version tag to the current git repository.
+.DESCRIPTION
+  Finds the most recent semantic version tag in the current git repository, increments the major version, and creates
+  a new tag based on this new version. 
+.PARAMETER Message
+  The message to associate with the new tag.
+.PARAMETER CurrentBranchOnly
+  Restricts the search for prior version tags to the current branch. By default all branches are searched.
+#>
 function Add-MajorVersionTag {
   Param (
     [Parameter(Mandatory = $true, Position = 0)][string]$Message,
@@ -11,6 +22,17 @@ function Add-MajorVersionTag {
   WriteSuccessMessage $($elements[3]) $NewTag $Message
 }
 
+<# 
+.SYNOPSIS
+  Adds a new minor version tag to the current git repository.
+.DESCRIPTION
+  Finds the most recent semantic version tag in the current git repository, increments the minor version, and creates
+  a new tag based on this new version. 
+.PARAMETER Message
+  The message to associate with the new tag.
+.PARAMETER CurrentBranchOnly
+  Restricts the search for prior version tags to the current branch. By default all branches are searched.
+#>
 function Add-MinorVersionTag {
   Param (
     [Parameter(Mandatory = $true, Position = 0)][string]$Message,
@@ -24,6 +46,17 @@ function Add-MinorVersionTag {
   WriteSuccessMessage $($elements[3]) $NewTag $Message
 }
 
+<# 
+.SYNOPSIS
+  Adds a new patch version tag to the current git repository.
+.DESCRIPTION
+  Finds the most recent semantic version tag in the current git repository, increments the patch version, and creates
+  a new tag based on this new version. 
+.PARAMETER Message
+  The message to associate with the new tag.
+.PARAMETER CurrentBranchOnly
+  Restricts the search for prior version tags to the current branch. By default all branches are searched.
+#>
 function Add-PatchVersionTag {
   Param (
     [Parameter(Mandatory = $true, Position = 0)][string]$Message,
@@ -37,6 +70,16 @@ function Add-PatchVersionTag {
   WriteSuccessMessage $($elements[3]) $NewTag $Message
 }
 
+<# 
+.SYNOPSIS
+  Adds a new semantic version tag to the current git repository.
+.DESCRIPTION
+  Creates a new semantic version tag to the current git respository based on the provided version string.
+.PARAMETER Tag
+  The new semantic version tag to apply. Must be in the format 'v0.0.0'.
+.PARAMETER Message
+  The message to associate with the new tag.
+#>
 function New-VersionTag {
   Param (
     [Parameter(Mandatory = $true, Position = 0)][string]$Tag,
