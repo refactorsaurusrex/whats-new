@@ -8,7 +8,7 @@ Powershell functions for versioning a git repo with tags and more!
 
 ## Background
 
-This module is essentially my personal PowerShell toolbelt: a collection of functions that I myself use on a regular basis at work and on the side. It originally started with just the four commands to create semantically versioned tags in git repositories, but has expanded into a smorgasbord of semi-related functionality you see here today. 
+This module is essentially my personal PowerShell toolbelt: a collection of functions that I myself use on a regular basis at work and on the side. It originally started with just the four commands to create semantically versioned tags in git repositories, but has expanded into the smorgasbord of semi-related functionality you see here today. 
 
 # Features 
 ...at a glance. For more details, [check out the wiki](https://github.com/refactorsaurusrex/whats-new/wiki).
@@ -71,8 +71,6 @@ $newManifestArgs = @{
 
 New-ModuleManifest @newManifestArgs
 ```
-
-
 
 # Installation
 
