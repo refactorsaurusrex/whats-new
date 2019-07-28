@@ -8,7 +8,7 @@ namespace WhatsNew
     /// <summary>
     /// <para type="synopsis">Extracts cmdlet names from a given module.</para>
     /// <para type="description">Returns a list of all cmdlet names contained within a specified binary cmdlet module.</para>
-    /// <para type="link" uri="https://github.com/refactorsaurusrex/whats-new/wiki/Cmdlet-Docs">The whats-new wiki.</para>
+    /// <para type="link" uri="https://github.com/refactorsaurusrex/whats-new/wiki/Cmdlet-and-Function-Overview#export-binarycmdletnames">Online help.</para>
     /// </summary>
     [PublicAPI]
     [Cmdlet(VerbsData.Export, "BinaryCmdletNames")]

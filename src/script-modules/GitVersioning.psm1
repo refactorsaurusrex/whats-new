@@ -8,6 +8,8 @@
   The message to associate with the new tag.
 .PARAMETER CurrentBranchOnly
   Restricts the search for prior version tags to the current branch. By default all branches are searched.
+.LINK
+  https://github.com/refactorsaurusrex/whats-new/wiki/Cmdlet-and-Function-Overview#add-majorversiontag
 #>
 function Add-MajorVersionTag {
   Param (
@@ -32,6 +34,8 @@ function Add-MajorVersionTag {
   The message to associate with the new tag.
 .PARAMETER CurrentBranchOnly
   Restricts the search for prior version tags to the current branch. By default all branches are searched.
+.LINK
+  https://github.com/refactorsaurusrex/whats-new/wiki/Cmdlet-and-Function-Overview#add-minorversiontag
 #>
 function Add-MinorVersionTag {
   Param (
@@ -56,6 +60,8 @@ function Add-MinorVersionTag {
   The message to associate with the new tag.
 .PARAMETER CurrentBranchOnly
   Restricts the search for prior version tags to the current branch. By default all branches are searched.
+.LINK
+  https://github.com/refactorsaurusrex/whats-new/wiki/Cmdlet-and-Function-Overview#add-patchversiontag
 #>
 function Add-PatchVersionTag {
   Param (
@@ -79,6 +85,8 @@ function Add-PatchVersionTag {
   The new semantic version tag to apply. Must be in the format 'v0.0.0'.
 .PARAMETER Message
   The message to associate with the new tag.
+.LINK
+  https://github.com/refactorsaurusrex/whats-new/wiki/Cmdlet-and-Function-Overview#new-versiontag
 #>
 function New-VersionTag {
   Param (

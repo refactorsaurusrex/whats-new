@@ -8,7 +8,7 @@ namespace WhatsNew
     /// <summary>
     /// <para type="synopsis">Extracts aliases from a given PowerShell script.</para>
     /// <para type="description">Returns a list of all aliases contained within a specified PowerShell script.</para>
-    /// <para type="link" uri="https://github.com/refactorsaurusrex/whats-new/wiki/Cmdlet-Docs">The whats-new wiki.</para>
+    /// <para type="link" uri="https://github.com/refactorsaurusrex/whats-new/wiki/Cmdlet-and-Function-Overview#export-psscriptaliases">Online help.</para>
     /// </summary>
     [PublicAPI]
     [Cmdlet(VerbsData.Export, "PSScriptAliases")]

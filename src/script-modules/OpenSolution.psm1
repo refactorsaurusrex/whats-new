@@ -1,8 +1,12 @@
 <#
 .SYNOPSIS
+  Opens a `.sln` file in the default editor.
+.DESCRIPTION
   Recursively searches for the first `.sln` file and opens it using the default application, usually Visual Studio. 
 .PARAMETER RootDirectory
   The directory to search. Defaults to the current directory. 
+.LINK
+  https://github.com/refactorsaurusrex/whats-new/wiki/Cmdlet-and-Function-Overview#open-solution
 #>
 function Open-Solution {
   [Alias('sln')]

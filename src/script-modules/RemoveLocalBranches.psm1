@@ -6,6 +6,8 @@
   are ignored. Use -Force to delete all non-master branches regardless of merge status.
 .PARAMETER Force
   Deletes all braches regardless of merge status.
+.LINK
+  https://github.com/refactorsaurusrex/whats-new/wiki/Cmdlet-and-Function-Overview#remove-localbranches
 #>
 function Remove-LocalBranches ([switch]$Force) {
   git branch |
