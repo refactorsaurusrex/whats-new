@@ -5,7 +5,7 @@ param(
 $ErrorActionPreference = 'Stop'
 
 if ($env:APPVEYOR_BUILD_VERSION) {
-  $Version = $env:APPVEYOR_BUILD_VERSION
+  $Version = [regex]::match($env:APPVEYOR_BUILD_VERSION,'[0-9]+\.[0-9]+\.[0-9]+').Groups[0].Value
 } elseif ($Version -eq '') {
   throw "Missing version parameter"
 }
