@@ -10,6 +10,8 @@
   The path to the module manifest file.
 .PARAMETER NoConfirm
   Do not confirm before overwriting the manifest file.
+.LINK
+  https://github.com/refactorsaurusrex/whats-new/wiki/Cmdlet-and-Function-Overview#remove-modulemanifestcomments
 #>
 function Remove-ModuleManifestComments {
   [CmdletBinding(SupportsShouldProcess = $true, ConfirmImpact = 'High')]
