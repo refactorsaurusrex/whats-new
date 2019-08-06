@@ -46,6 +46,11 @@ $manifestPath = "$publishOutputDir\WhatsNew.psd1"
 
 $newManifestArgs = @{
   Path = $manifestPath
+}
+
+$updateManifestArgs = @{
+  Path = $manifestPath
+  CopyRight = "(c) $((Get-Date).Year) Nick Spreitzer"
   Description = "Powershell functions for versioning a git repo with tags and more!"
   Guid = '861e5d28-8348-47d3-a2f6-cdd23e33bb55'
   Author = 'Nick Spreitzer'
@@ -55,10 +60,9 @@ $newManifestArgs = @{
   NestedModules = $modules
   CmdletsToExport = $cmdletNames
   FunctionsToExport = $scriptFunctions
-}
-
-$updateManifestArgs = @{
-  Path = $manifestPath
+  CompatiblePSEditions = @("Desktop","Core")
+  HelpInfoUri = "https://github.com/refactorsaurusrex/whats-new/wiki"
+  PowerShellVersion = "6.0"
   PrivateData = @{
     Tags = 'git','semver'
     LicenseUri = 'https://github.com/refactorsaurusrex/whats-new/blob/master/LICENSE.md'
