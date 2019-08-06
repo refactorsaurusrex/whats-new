@@ -10,11 +10,10 @@ if ($env:APPVEYOR_BUILD_VERSION) {
   throw "Missing version parameter"
 }
 
-$publishOutputDir = "$PSScriptRoot\publish\WhatsNew"
-
 Get-ChildItem -Filter '*.nupkg' | Remove-Item 
-Remove-Item -Path $publishOutputDir -Recurse -ErrorAction SilentlyContinue
+Remove-Item -Path "$PSScriptRoot\publish" -Recurse -ErrorAction SilentlyContinue
 
+$publishOutputDir = "$PSScriptRoot\publish\WhatsNew"
 $sln = Get-ChildItem -Filter '*.sln' -Recurse -Path $PSScriptRoot | Select-Object -First 1 -ExpandProperty FullName
 dotnet publish $sln --output $publishOutputDir -c Release
 
