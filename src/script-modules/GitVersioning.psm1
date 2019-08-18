@@ -47,7 +47,7 @@ function New-VersionTag {
     throw "$Tag is not a valid version number. Use the format 'v1.2.3'."
   }
 
-  git tag -a $NewTag -m $Message 
+  git tag -a $Tag -m $Message 
   Write-Host "New tag created`: $Tag $Message" -ForegroundColor Cyan
 }
 
