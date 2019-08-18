@@ -5,22 +5,13 @@ using JetBrains.Annotations;
 
 namespace WhatsNew
 {
-    /// <summary>
-    /// <para type="synopsis">Extracts cmdlet aliases from a given module.</para>
-    /// <para type="description">Returns a list of all cmdlet aliases contained within a specified binary cmdlet module.</para>
-    /// <para type="link" uri="https://github.com/refactorsaurusrex/whats-new/wiki/Cmdlet-and-Function-Overview#export-binarycmdletaliases">Online help.</para>
-    /// </summary>
     [PublicAPI]
     [Cmdlet(VerbsData.Export, "BinaryCmdletAliases")]
     public class ExportBinaryCmdletAliasesCmdlet : PSCmdlet
     {
-        /// <summary>
-        /// <para type="description">The PSModuleInfo from which to extract cmdlet names</para>
-        /// </summary>
         [Parameter(ValueFromPipeline = true, Mandatory = true)]
         public PSModuleInfo ModuleInfo { get; set; }
 
-        /// <inheritdoc />
         protected override void ProcessRecord()
         {
             if (ModuleInfo.ModuleType != ModuleType.Binary)
