@@ -59,7 +59,7 @@ $updateManifestArgs = @{
   HelpInfoUri = "https://github.com/refactorsaurusrex/whats-new/wiki"
   PowerShellVersion = "6.0"
   PrivateData = @{
-    Tags = 'git','semver'
+    Tags = 'git','semver', 'markdown'
     LicenseUri = 'https://github.com/refactorsaurusrex/whats-new/blob/master/LICENSE.md'
     ProjectUri = 'https://github.com/refactorsaurusrex/whats-new'
   }
