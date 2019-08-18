@@ -72,6 +72,16 @@ $newManifestArgs = @{
 New-ModuleManifest @newManifestArgs
 ```
 
+## Create a Table of Contents
+
+...for your GitHub wiki home page, [just like this](https://github.com/refactorsaurusrex/whats-new/wiki#list-of-all-available-commands) with the [New-MarkdownTableOfContents](https://github.com/refactorsaurusrex/whats-new/wiki/New-MarkdownTableOfContents) cmdlet.
+
+**Pro Tip:** Install [ClipboardText](https://www.powershellgallery.com/packages/ClipboardText) to pipe your ToC right to your clipboard. 
+
+## Make Yaml Front Matter Pretty on GitHub
+
+If you happen to use [platyPS](https://github.com/PowerShell/platyPS) to create markdown documentation for PowerShell modules (as I do), you may have noticed that the metadata platyPS emits as yaml front matter doesn't render all that nicely on GitHub. Use [Switch-YamlFrontMatterToCodeFence](https://github.com/refactorsaurusrex/whats-new/wiki/Switch-YamlFrontMatterToCodeFence) to make it pretty on GitHub and [Switch-CodeFenceToYamlFrontMatter](https://github.com/refactorsaurusrex/whats-new/wiki/Switch-CodeFenceToYamlFrontMatter) to switch it back as needed. 
+
 # Installation
 
 Get it from the [PowerShell Gallery](https://www.powershellgallery.com/packages/WhatsNew): 
