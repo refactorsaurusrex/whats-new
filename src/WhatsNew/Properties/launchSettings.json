@@ -3,8 +3,8 @@
     "WhatsNew": {
       "commandName": "Executable",
       "executablePath": "C:\\Program Files\\PowerShell\\6\\pwsh.exe",
-      "commandLineArgs": "-NoExit -NoLogo -NoProfile -Command \"Import-Module .\\publish\\WhatsNew.dll\"",
-      "workingDirectory": "c:\\repos\\whats-new"
+      "commandLineArgs": "-NoExit -NoLogo -NoProfile -Command \"Import-Module .\\WhatsNew.dll\"",
+      "workingDirectory": "c:\\repos\\whats-new\\publish\\WhatsNew"
     }
   }
 }

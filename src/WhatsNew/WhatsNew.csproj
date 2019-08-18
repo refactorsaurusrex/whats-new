@@ -6,11 +6,11 @@
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <NoWarn></NoWarn>
-    <DocumentationFile>C:\Repos\whats-new\src\WhatsNew\WhatsNew.xml</DocumentationFile>
+    <DocumentationFile></DocumentationFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <DocumentationFile>C:\Repos\whats-new\src\WhatsNew\WhatsNew.xml</DocumentationFile>
+    <DocumentationFile></DocumentationFile>
     <NoWarn>1701;1702</NoWarn>
   </PropertyGroup>
 
@@ -26,16 +26,12 @@
 
   <ItemGroup>
     <PackageReference Include="Flurl" Version="2.8.2" />
-    <PackageReference Include="JetBrains.Annotations" Version="2019.1.1" />
+    <PackageReference Include="JetBrains.Annotations" Version="2019.1.3" />
     <PackageReference Include="PowerShellStandard.Library" Version="5.1.0" />
-    <PackageReference Include="XmlDoc2CmdletDoc" Version="0.2.12">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
-    </PackageReference>
   </ItemGroup>
 
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-    <Exec Command="if $(ConfigurationName) == Debug (&#xD;&#xA;  dotnet publish --no-build --output $(SolutionDir)..\publish&#xD;&#xA;  xcopy $(OutDir)$(ProjectName).dll-Help.xml $(SolutionDir)..\publish /y&#xD;&#xA;)" />
+    <Exec Command="if $(ConfigurationName) == Debug (&#xD;&#xA;  dotnet publish --no-build --output $(SolutionDir)..\publish\$(ProjectName)&#xD;&#xA;)" />
   </Target>
 
 </Project>
