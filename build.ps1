@@ -21,11 +21,6 @@ if ($LASTEXITCODE -ne 0) {
   throw "Failed to publish application."
 }
 
-Get-ChildItem -Filter "WhatsNew.dll-Help.xml" -Recurse -File -Path "$PSScriptRoot\src" |
-  Where-Object { $_.FullName -like "*bin\Release*" } | 
-  Select-Object -First 1 | 
-  Copy-Item -Destination $publishOutputDir -Force
-
 Remove-Item "$publishOutputDir\*.pdb"
 
 Import-Module "$publishOutputDir\WhatsNew.dll"
@@ -77,3 +72,16 @@ Remove-ModuleManifestComments $manifestPath -NoConfirm
 
 New-item -ItemType Directory -Path "$publishOutputDir\script-modules\" | Out-Null
 Get-ChildItem -Path "$PSScriptRoot\src\script-modules" -Filter "*.ps*1" | Copy-Item -Destination "$publishOutputDir\script-modules\"
+
+Install-Module platyPS
+Import-Module platyPS
+$docs = "$PSScriptRoot\docs"
+try {
+  git clone https://github.com/refactorsaurusrex/whats-new.wiki.git $docs
+  Switch-CodeFenceToYamlFrontMatter -Path $docs -NoConfirm
+  New-ExternalHelp -Path $docs -OutputPath $publishOutputDir
+} finally {
+  if (Test-Path $docs) {
+    Remove-Item -Path $docs -Recurse -Force
+  }
+}
