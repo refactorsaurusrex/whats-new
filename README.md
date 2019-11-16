@@ -78,6 +78,16 @@ New-ModuleManifest @newManifestArgs
 
 **Pro Tip:** Install [ClipboardText](https://www.powershellgallery.com/packages/ClipboardText) to pipe your ToC right to your clipboard. 
 
+## Download Desktop Wallpaper Images
+
+Microsoft has a [bunch](https://support.microsoft.com/en-us/help/17780) of pretty wallpaper images that are free for the taking. The only problem is that you can only download _one image at a time_. Laaaame. Well, not any more. Now all you have to do is run `Get-MicrosoftDesktopWallpaper`, specify one or more categories of images, and in a few minutes you're done.
+
+```powershell
+Get-MicrosoftDesktopWallpaper 
+	-OutDirectory 'C:\Users\Me\Images\Wallpaper' 
+	-Categories Animals,NaturalWonders,Panoramic,PlacesAndLandscapes
+```
+
 ## Make Yaml Front Matter Pretty on GitHub
 
 If you happen to use [platyPS](https://github.com/PowerShell/platyPS) to create markdown documentation for PowerShell modules (as I do), you may have noticed that the metadata platyPS emits as yaml front matter doesn't render all that nicely on GitHub. Use [Switch-YamlFrontMatterToCodeFence](https://github.com/refactorsaurusrex/whats-new/wiki/Switch-YamlFrontMatterToCodeFence) to make it pretty on GitHub and [Switch-CodeFenceToYamlFrontMatter](https://github.com/refactorsaurusrex/whats-new/wiki/Switch-CodeFenceToYamlFrontMatter) to switch it back as needed. 
