@@ -10,12 +10,14 @@ if ($env:APPVEYOR_BUILD_VERSION) {
   throw "Missing version parameter"
 }
 
-Get-ChildItem -Filter '*.nupkg' | Remove-Item 
-Remove-Item -Path "$PSScriptRoot\publish" -Recurse -ErrorAction SilentlyContinue
+if (Test-Path "$PSScriptRoot\publish") {
+  Remove-Item -Path "$PSScriptRoot\publish" -Recurse -Force
+}
 
-$publishOutputDir = "$PSScriptRoot\publish\WhatsNew"
-$sln = Get-ChildItem -Filter '*.sln' -Recurse -Path $PSScriptRoot | Select-Object -First 1 -ExpandProperty FullName
-dotnet publish $sln --output $publishOutputDir -c Release
+$appName = "WhatsNew"
+$publishOutputDir = "$PSScriptRoot\publish\$appName"
+$proj = Get-ChildItem -Filter "$appName.csproj" -Recurse -Path $PSScriptRoot | Select-Object -First 1 -ExpandProperty FullName
+dotnet publish $proj --output $publishOutputDir -c Release
 
 if ($LASTEXITCODE -ne 0) {
   throw "Failed to publish application."
@@ -23,7 +25,7 @@ if ($LASTEXITCODE -ne 0) {
 
 Remove-Item "$publishOutputDir\*.pdb"
 
-Import-Module "$publishOutputDir\WhatsNew.dll"
+Import-Module "$publishOutputDir\$appName.dll"
 $moduleInfo = Get-Module WhatsNew
 $cmdletNames = Export-BinaryCmdletNames -ModuleInfo $moduleInfo
 $cmdletAliases = Export-BinaryCmdletAliases -ModuleInfo $moduleInfo
@@ -36,8 +38,8 @@ $modules = $scriptFiles |
   Select-Object -ExpandProperty Name | 
   ForEach-Object { ".\script-modules\$_" }
 
-$modules += ".\WhatsNew.dll"
-$manifestPath = "$publishOutputDir\WhatsNew.psd1"
+$modules += ".\$appName.dll"
+$manifestPath = "$publishOutputDir\$appName.psd1"
 
 $newManifestArgs = @{
   Path = $manifestPath
