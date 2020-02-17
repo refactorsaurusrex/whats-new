@@ -1,4 +1,4 @@
-[![Build status](https://ci.appveyor.com/api/projects/status/rsvlu24m8jdxdbql?svg=true)](https://ci.appveyor.com/project/refactorsaurusrex/whats-new)
+[![Build status](https://img.shields.io/appveyor/build/refactorsaurusrex/whats-new/master?style=for-the-badge&logo=appveyor)](https://ci.appveyor.com/project/refactorsaurusrex/whats-new/branch/master) [![PowerShell Gallery](https://img.shields.io/powershellgallery/dt/whatsnew?style=for-the-badge&label=Downloads&logo=powershell)](https://www.powershellgallery.com/packages/WhatsNew) 
 
 # What's New?!
 
