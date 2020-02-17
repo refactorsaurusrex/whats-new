@@ -11,6 +11,9 @@ build_script:
 test: off
 deploy_script:
 - pwsh: Publish-Module -NuGetApiKey $env:psgallery -Path .\publish\WhatsNew
+skip_commits:
+  files:
+    - '**/*.md'
 environment:
   psgallery:
     secure: CH/4X9NuaEG0NizuG9RVhZIt25cja8eS7AwO/E8e8Tb0pNMpVnPnMZvPHhl0WmV7
